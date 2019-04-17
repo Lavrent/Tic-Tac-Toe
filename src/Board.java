@@ -9,7 +9,6 @@ public class Board {
     private int player1_steps = 0;
     private int player2_steps = 0;
 
-
     public Board(int size) {
         this.size = size;
         board = new String[size][size];
@@ -17,7 +16,6 @@ public class Board {
     }
 
     public void play() {
-
         System.out.println("X's turn");
         currentPlayer = x_player;
         makeMove("X");
@@ -115,18 +113,16 @@ public class Board {
             if (board[row][size - 1 - row].equals(mark))
                 reverse_diagonal_count++;
         }
-        return reverse_diagonal_count == size;
 
+        return reverse_diagonal_count == size;
     }
 
     public boolean isTie() {
         return !wins("X") && !wins("O") && isFull(board);
-
     }
 
     public boolean isFinished() {
         return wins("X") || wins("O") || isTie();
-
     }
 
     private boolean isFull(String[][] board) {
@@ -138,7 +134,6 @@ public class Board {
             }
         }
         return count == size * size;
-
     }
 
     public void initializeBoard() {
