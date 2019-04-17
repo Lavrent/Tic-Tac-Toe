@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
@@ -7,20 +6,21 @@ public class Player {
     private int row_pos;
 
     public void setRow_Pos() {
-        System.out.println("Type where do you want to put the mark(row,col)");
-        this.row_pos =in.nextInt();
+        System.out.println("Type where do you want to put the mark(row)");
+        this.row_pos = Integer.parseInt(InputHandler.correctInput());
     }
 
     public void setCol_Pos() {
-        this.col_pos = in.nextInt();
+        System.out.println("Type where do you want to put the mark(col)");
+        this.col_pos = Integer.parseInt(InputHandler.correctInput());
     }
 
     public int getRow_Pos() {
-        return this.row_pos;
+        return row_pos;
     }
 
     public int getCol_Pos() {
-        return this.col_pos;
+        return col_pos;
     }
 }
 

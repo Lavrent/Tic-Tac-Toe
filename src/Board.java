@@ -1,7 +1,7 @@
-import java.util.Scanner;
 
 public class Board {
     private int size;
+    private int winning_condition;
     private String[][] board;
     Player x_player = new Player();
     Player o_player = new Player();
@@ -9,11 +9,17 @@ public class Board {
     private int player1_steps = 0;
     private int player2_steps = 0;
 
-    public Board(int size) {
+    public Board(int size, int winning_condition) {
         this.size = size;
+        setWinning_condition(winning_condition);
         board = new String[size][size];
         initializeBoard(); // in order to not have a nullPointerException
     }
+
+    public void setWinning_condition(int win_cond){
+            this.winning_condition = win_cond;
+    }
+
 
     public void play() {
         System.out.println("X's turn");
@@ -29,9 +35,9 @@ public class Board {
     }
 
     private void checkForResult() {
-        if (wins("X")) {
+        if (checkWin("X")) {
             System.out.println("x_player wins");
-        } else if (wins("O")) {
+        } else if (checkWin("O")) {
             System.out.println("O_player wins");
         } else if (isTie())
             System.out.println("It's a tie");
@@ -46,7 +52,6 @@ public class Board {
 
         } else if (currentPlayer.equals(o_player)) {
             currentPlayer = x_player;
-
             System.out.println("X's turn");
             makeMove("X");
             player1_steps++;
@@ -56,11 +61,11 @@ public class Board {
     public void makeMove(String mark) {  // mark is "X" or "O"
         currentPlayer.setRow_Pos();
         currentPlayer.setCol_Pos();
-        if (currentPlayer.getRow_Pos() > size || currentPlayer.getRow_Pos()<0) {
+        if (currentPlayer.getRow_Pos() >= size || currentPlayer.getRow_Pos() < 0) {
             System.out.println("row position is out of bounds, please try again");
             makeMove(mark);
         }
-        if (currentPlayer.getCol_Pos() > size || currentPlayer.getCol_Pos()<0) {
+        if (currentPlayer.getCol_Pos() >= size || currentPlayer.getCol_Pos() < 0) {
             System.out.println("col position is out of bounds, please try again");
             makeMove(mark);
         }
@@ -73,20 +78,23 @@ public class Board {
         printBoard();
     }
 
-    public boolean wins(String mark) {
-        int row_count, col_count, diagonal_count, reverse_diagonal_count;
 
-        //row check
+    private boolean checkRow(String mark) {
+        int col_count;
         for (int row = 0; row < size; row++) {
             col_count = 0;
             for (int col = 0; col < size; col++) {
                 if (board[row][col].equals(mark))
                     col_count++;
             }
-            if (col_count == size)
+            if (col_count == winning_condition)
                 return true;
         }
+        return false;
+    }
 
+    private boolean checkCol(String mark) {
+        int row_count;
         //column check
         for (int col = 0; col < size; col++) {
             row_count = 0;
@@ -94,35 +102,43 @@ public class Board {
                 if (board[row][col].equals(mark))
                     row_count++;
             }
-            if (row_count == size)
+            if (row_count == winning_condition)
                 return true;
         }
+        return false;
+    }
 
-        //diagonal check
-        diagonal_count = 0;
+
+    private boolean checkDiagonal(String mark) {
+        int diagonal_count = 0;
         for (int row = 0; row < size; row++) {
             if (board[row][row].equals(mark))
                 diagonal_count++;
         }
-        if (diagonal_count == size)
-            return true;
+        return (diagonal_count == winning_condition);
+    }
 
-        //reverse diagonal_check
-        reverse_diagonal_count = 0;
+
+    private boolean checkReverseDiagonal(String mark) {
+
+        int reverse_diagonal_count = 0;
         for (int row = 0; row < size; row++) {
             if (board[row][size - 1 - row].equals(mark))
                 reverse_diagonal_count++;
         }
-
-        return reverse_diagonal_count == size;
+        return reverse_diagonal_count == winning_condition;
     }
 
-    public boolean isTie() {
-        return !wins("X") && !wins("O") && isFull(board);
+    private boolean checkWin(String mark) {
+            return checkRow(mark) || checkCol(mark) || checkDiagonal(mark) || checkReverseDiagonal(mark);
     }
 
-    public boolean isFinished() {
-        return wins("X") || wins("O") || isTie();
+    private boolean isTie() {
+        return !checkWin("X") && !checkWin("O") && isFull(board);
+    }
+
+    private boolean isFinished() {
+        return checkWin("X") || checkWin("O") || isTie();
     }
 
     private boolean isFull(String[][] board) {
@@ -136,7 +152,7 @@ public class Board {
         return count == size * size;
     }
 
-    public void initializeBoard() {
+    private void initializeBoard() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 board[i][j] = " ";
@@ -145,20 +161,16 @@ public class Board {
     }
 
     public void printBoard() {
-        for (int i = 0; i < size + 2; i++) {
-            System.out.print("-");
-        }
         System.out.println();
         for (int i = 0; i < size; i++) {
-            System.out.print("|");
             for (int j = 0; j < size; j++) {
-                System.out.print(board[i][j]);
+                System.out.print("|" + board[i][j]);
             }
-            System.out.println("|");
-        }
-
-        for (int i = 0; i < size + 2; i++) {
-            System.out.print("-");
+            System.out.println();
+            for (int j = 0; j < 2 * size + 1; j++) {
+                System.out.print("-");
+            }
+            System.out.println();
         }
         System.out.println();
     }
