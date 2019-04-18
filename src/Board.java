@@ -58,18 +58,8 @@ public class Board {
     }
 
     public void makeMove(String mark) {  // mark is "X" or "O"
-        currentPlayer.setRow_Pos();
-
-        if (currentPlayer.getRow_Pos() >= size || currentPlayer.getRow_Pos() < 0) {
-            System.out.println("row position is out of bounds, please provide valid coordinates");
-            makeMove(mark);
-        }
-        currentPlayer.setCol_Pos();
-
-        if (currentPlayer.getCol_Pos() >= size || currentPlayer.getCol_Pos() < 0) {
-            System.out.println("col position is out of bounds, please provide valid coordinates");
-            makeMove(mark);
-        }
+        currentPlayer.setRow_Pos(size);
+        currentPlayer.setCol_Pos(size);
         if (board[currentPlayer.getRow_Pos()][currentPlayer.getCol_Pos()].trim().isEmpty())
             board[currentPlayer.getRow_Pos()][currentPlayer.getCol_Pos()] = mark;
         else {
