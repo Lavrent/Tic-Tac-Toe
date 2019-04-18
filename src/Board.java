@@ -3,9 +3,9 @@ public class Board {
     private int size;
     private int winning_condition;
     private String[][] board;
-    Player x_player = new Player();
-    Player o_player = new Player();
-    Player currentPlayer = new Player();
+    private Player x_player = new Player();
+    private Player o_player = new Player();
+    private Player currentPlayer = new Player();
     private int player1_steps = 0;
     private int player2_steps = 0;
 
@@ -60,13 +60,14 @@ public class Board {
 
     public void makeMove(String mark) {  // mark is "X" or "O"
         currentPlayer.setRow_Pos();
-        currentPlayer.setCol_Pos();
         if (currentPlayer.getRow_Pos() >= size || currentPlayer.getRow_Pos() < 0) {
-            System.out.println("row position is out of bounds, please try again");
+            System.out.println("row position is out of bounds, please provide valid coordinates");
             makeMove(mark);
         }
-        if (currentPlayer.getCol_Pos() >= size || currentPlayer.getCol_Pos() < 0) {
-            System.out.println("col position is out of bounds, please try again");
+
+        currentPlayer.setCol_Pos();
+      if (currentPlayer.getCol_Pos() >= size || currentPlayer.getCol_Pos() < 0) {
+            System.out.println("col position is out of bounds, please provide valid coordinates");
             makeMove(mark);
         }
         if (board[currentPlayer.getRow_Pos()][currentPlayer.getCol_Pos()].trim().isEmpty())
