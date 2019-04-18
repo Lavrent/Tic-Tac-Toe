@@ -20,7 +20,6 @@ public class Board {
             this.winning_condition = win_cond;
     }
 
-
     public void play() {
         System.out.println("X's turn");
         currentPlayer = x_player;
