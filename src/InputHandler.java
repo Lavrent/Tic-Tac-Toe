@@ -6,7 +6,7 @@ public class InputHandler {
     public static String correctInput() {
         String input = in.nextLine();
         while (!input.matches("\\d+") || Integer.parseInt(input) < 0 || input.trim().contains(" ")) {
-            System.out.println("input must be a one digit positive number and contain no spaces try again");
+            System.out.println("input must be a positive number and contain no spaces try again");
             input = in.nextLine();
         }
 
