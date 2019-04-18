@@ -3,9 +3,9 @@ public class Board {
     private int size;
     private int winning_condition;
     private String[][] board;
-    private Player x_player = new Player();
-    private Player o_player = new Player();
-    private Player currentPlayer = new Player();
+    Player x_player = new Player();
+    Player o_player = new Player();
+    Player currentPlayer = new Player();
     private int player1_steps = 0;
     private int player2_steps = 0;
 
@@ -16,8 +16,8 @@ public class Board {
         initializeBoard(); // in order to not have a nullPointerException
     }
 
-    public void setWinning_condition(int win_cond){
-            this.winning_condition = win_cond;
+    public void setWinning_condition(int win_cond) {
+        this.winning_condition = win_cond;
     }
 
     public void play() {
@@ -59,13 +59,14 @@ public class Board {
 
     public void makeMove(String mark) {  // mark is "X" or "O"
         currentPlayer.setRow_Pos();
+
         if (currentPlayer.getRow_Pos() >= size || currentPlayer.getRow_Pos() < 0) {
             System.out.println("row position is out of bounds, please provide valid coordinates");
             makeMove(mark);
         }
-
         currentPlayer.setCol_Pos();
-      if (currentPlayer.getCol_Pos() >= size || currentPlayer.getCol_Pos() < 0) {
+
+        if (currentPlayer.getCol_Pos() >= size || currentPlayer.getCol_Pos() < 0) {
             System.out.println("col position is out of bounds, please provide valid coordinates");
             makeMove(mark);
         }
@@ -130,7 +131,7 @@ public class Board {
     }
 
     private boolean checkWin(String mark) {
-            return checkRow(mark) || checkCol(mark) || checkDiagonal(mark) || checkReverseDiagonal(mark);
+        return checkRow(mark) || checkCol(mark) || checkDiagonal(mark) || checkReverseDiagonal(mark);
     }
 
     private boolean isTie() {

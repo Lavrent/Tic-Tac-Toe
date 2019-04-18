@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Player {
-    Scanner in = new Scanner(System.in);
+Scanner in = new Scanner(System.in);
     private int col_pos;
     private int row_pos;
 
